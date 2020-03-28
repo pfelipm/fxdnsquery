@@ -20,15 +20,15 @@ function CONSULTADNS(registroDNS, lista_dominios) {
   
   const tipoRegistros = ['A', 'AAAA', 'CAA', 'CNAME', 'DS', 'DNSKEY', 'MX', 'NS', 'NSEC', 'NSEC3', 'RRSIG', 'SOA', 'TXT'];
   
-  if (typeof registroDNS != 'string') {throw 'Falta parámetro 1 o es incorrecto (registroDNS).';}
-  if (typeof lista_dominios == 'undefined') {throw 'Falta parámetro 2 (lista_dominios).';}
-  if (!tipoRegistros.some(function(tipo) {return tipo == registroDNS;})) {throw "Registro DNS no admitido.";}
+  if (typeof registroDNS != 'string') throw 'Falta parámetro 1 o es incorrecto (registroDNS).';
+  if (typeof lista_dominios == 'undefined') throw 'Falta parámetro 2 (lista_dominios).';
+  if (!tipoRegistros.some(function(tipo) {return tipo == registroDNS;})) throw "Registro DNS no admitido.";
   
-  var resultado = [];
+  let resultado = [];
   
   // Realiza consulta(s) o establece resultado(s) como ''
   
-  if (lista_dominios.map) {lista_dominios.map(function(dominio) {
+  if (lista_dominios.map) {lista_dominios.map(dominio => {
     resultado.push(dominio != '' ? NSLookup(registroDNS, dominio) : '');});
   }
   else {
@@ -59,17 +59,17 @@ function ESGOOGLEMAIL(lista_email) {
   
   // Comprobación general de parámetros
 
-  if (typeof lista_email == 'undefined') {throw 'Falta parámetro (lista_email)';}
+  if (typeof lista_email == 'undefined') throw 'Falta parámetro (lista_email)';
 
   // Dominios válidos para servidores de correo de Google
   
   const domains = ['aspmx.l.google.com', 'googlemail.com']; // El 2º parece ser obsoleto
   
-  var domain, resultado = [];
+  let domain, resultado = [];
   
   if (lista_email.map) {
     
-    lista_email.map(function(email) {
+    lista_email.map(email => {
       
       if (email == '') {resultado.push('');}
       else {
@@ -79,7 +79,7 @@ function ESGOOGLEMAIL(lista_email) {
         
         // TRUE si el registro MX devuelto contiene algunos de los elementos de domains[]
         
-        resultado.push(domains.some(function(d) {return String(NSLookup('MX', domain)).toLowerCase().includes(d);}));
+        resultado.push(domains.some(d => String(NSLookup('MX', domain)).toLowerCase().includes(d)));
       }
     }) 
   } else {
@@ -108,9 +108,9 @@ function NSLookup(type, domain) {
   
   type = type.toUpperCase();
    
-  var url = 'https://cloudflare-dns.com/dns-query?name=' + encodeURIComponent(domain) + '&type=' + encodeURIComponent(type);
+  let url = 'https://cloudflare-dns.com/dns-query?name=' + encodeURIComponent(domain) + '&type=' + encodeURIComponent(type);
   
-  var options = {
+  let options = {
     "muteHttpExceptions": true,
     "headers": {
       "accept": "application/dns-json"
@@ -127,7 +127,7 @@ function NSLookup(type, domain) {
       throw new Error(rc);
     }
     
-    var errors = [
+    let errors = [
       { "name": "NoError", "description": "Sin errores"}, // 0
       { "name": "FormErr", "description": "Error de formato"}, // 1
       { "name": "ServFail", "description": "Fallo del servidor"}, // 2
@@ -140,7 +140,7 @@ function NSLookup(type, domain) {
       { "name": "NotAuth", "description": "No autorizado"} // 9
     ];
     
-    var response = JSON.parse(resultText);
+    let response = JSON.parse(resultText);
     
     if (response.Status !== 0) {
       return errors[response.Status].name;
@@ -148,7 +148,7 @@ function NSLookup(type, domain) {
     
     var outputData = [];
     
-    for (var i in response.Answer) {
+    for (let i in response.Answer) {
       outputData.push(response.Answer[i].data);
     }
     
