@@ -11,7 +11,7 @@ Consulta el registro indicado en el o los dominios que se pasan como parámetro 
 
 Donde:
 - `registroDNS`: Alguna de estas cadenas de texto: **A | AAAA | CAA | CNAME | DS | DNSKEY | MX | NS | NSEC | NSEC3 | RRSIG | SOA | TXT**
-- `dominios`: Una cadena de texto que representa un dominio válido o un intervalo con un conjunto de ellas.
+- `dominios`: Un dominio válido o un intervalo con varios de ellos.
 
 Ejemplo:
 
@@ -24,7 +24,7 @@ Determina si un email o dominio (o lista de emails o dominios) está gestionado 
 
 `=ESGOOGLEEMAIL(lista_emails_o_dominios)`
 
-Donde `lista_emails_o_dominios` es una cadena de texto que representa una dirección de correo electrónico o dominio o un intervalo de ellas.
+Donde `lista_emails_o_dominios` es una dirección de correo electrónico o dominio o un intervalo de ellos con varios de ellos.
 
 Ejemplo:
 
