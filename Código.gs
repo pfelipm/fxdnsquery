@@ -67,7 +67,7 @@ function ESGOOGLEMAIL(lista_emails) {
 
   // Dominios válidos para servidores de correo de Google
   
-  const domains = ['aspmx.l.google.com', 'googlemail.com', 'google.com', 'gmail.com']; // El 2º parece ser obsoleto
+  const domains = ['aspmx.l.google.com', 'googlemail.com', 'google.com']; // El 2º parece ser obsoleto
   
   let domain, resultado = [];
   
