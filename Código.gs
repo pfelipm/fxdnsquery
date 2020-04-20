@@ -2,7 +2,7 @@
  * Consulta registros DNS de los dominios indicados usando el servicio de CloudFlare
  * 
  * @param {"MX"} registroDNS Registro a consultar ( A | AAAA | CAA | CNAME | DS | DNSKEY | MX | NS | NSEC | NSEC3 | RRSIG | SOA | TXT ).
- * @param {A2:A10} [lista_dominios] Dominio o intervalo con los dominios a interrogar.
+ * @param {A2:A10} lista_dominios Dominio o intervalo con los dominios a interrogar.
  *
  * @return Resultados de la consulta DNS
  *
@@ -29,8 +29,11 @@ function CONSULTADNS(registroDNS, lista_dominios) {
   
   // Realiza consulta(s) o establece resultado(s) como ''
   
-  if (lista_dominios.map) {lista_dominios.map(dominio => {
-    resultado.push(dominio != '' ? NSLookup(registroDNS, dominio) : '');});
+  if (lista_dominios.map) {
+    lista_dominios.forEach(dominios => {
+                           let fila = [];
+                           dominios.forEach(dominio => {fila.push(dominio != '' ? NSLookup(registroDNS, dominio) : '');});
+                           resultado.push(fila);});
   }
   else {
     resultado = lista_dominios != '' ? NSLookup(registroDNS, lista_dominios) : '';
@@ -44,7 +47,7 @@ function CONSULTADNS(registroDNS, lista_dominios) {
  * por Google o no (Gmail o G Suite), consultando para ello sus registros MX
  * por medio del servicio de CloudFlare. 
  *
- * @param {"juannadie@google.com"} email Email o dominio a comprobar.
+ * @param {"juannadie@google.com"} lista_emails Emails o dominios a comprobar.
  * 
  * @return TRUE | FALSE
  *
@@ -56,39 +59,38 @@ function CONSULTADNS(registroDNS, lista_dominios) {
  * Copyright (c) 2020 Pablo Felip Monferrer(@pfelipm)
  */ 
 
-function ESGOOGLEMAIL(lista_email) {
+function ESGOOGLEMAIL(lista_emails) {
   
   // Comprobación general de parámetros
 
-  if (typeof lista_email == 'undefined') throw 'Falta parámetro (lista_email)';
+  if (typeof lista_emails == 'undefined') throw 'Falta parámetro (lista_email)';
 
   // Dominios válidos para servidores de correo de Google
   
-  const domains = ['aspmx.l.google.com', 'googlemail.com']; // El 2º parece ser obsoleto
+  const domains = ['aspmx.l.google.com', 'googlemail.com', 'google.com', 'gmail.com']; // El 2º parece ser obsoleto
   
   let domain, resultado = [];
   
-  if (lista_email.map) {
+  if (lista_emails.map) {
     
-    lista_email.map(email => {
-      
-      if (email == '') {resultado.push('');}
-      else {
-        
-        if (email.includes('@')) {domain = email.match(/.*@(.+)$/)[1];
-                               } else {domain = email;}
-        
-        // TRUE si el registro MX devuelto contiene algunos de los elementos de domains[]
-        
-        resultado.push(domains.some(d => String(NSLookup('MX', domain)).toLowerCase().includes(d)));
-      }
-    }) 
+    lista_emails.forEach(emails => {
+                         let fila = [];
+                         emails.forEach(email => {
+                           if (email == '') fila.push('');
+                           else {
+                             if (email.includes('@')) domain = email.match(/.*@(.+)$/)[1];
+                             else domain = email;
+                           }
+                           // TRUE si el registro MX devuelto contiene algunos de los elementos de domains[]
+                           fila.push(domains.some(d => String(NSLookup('MX', domain)).toLowerCase().includes(d)));});
+                  
+                         resultado.push(fila)})
   } else {
-    if (lista_email == '') {resultado = '';}
+    if (lista_emails == '') {resultado = '';}
     else {
       
-      if (lista_email.includes('@')) {domain = lista_email.match(/.*@(.+)$/)[1];
-                             } else {domain = lista_email;}
+      if (lista_emails.includes('@')) {domain = lista_emails.match(/.*@(.+)$/)[1];
+                             } else {domain = lista_emails;}
       
       // TRUE si el registro MX devuelto contiene algunos de los elementos de domains[]
       
