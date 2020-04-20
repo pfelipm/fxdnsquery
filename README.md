@@ -35,6 +35,7 @@ Ejemplo:
 ![Selección_053](https://user-images.githubusercontent.com/12829262/79771812-98e3f800-832f-11ea-8839-0f9999de9e66.png)
 
 # Modo de uso
+Dos posibilidades distintas:
 1. Abre el editor GAS de tu hoja de cálculo (`Herramientas` ⏩ `Editor de secuencias de comandos`), pega el código que encontrarás dentro del archivo `Código.gs` de este repositorio y guarda los cambios. Debes asegurarte de que se esté utilizando el nuevo motor GAS JavaScript V8 (`Ejecutar` ⏩ `Habilitar ... V8`).
 2. Hazte una copia de esto :point_right: [DNS Query # demo](https://docs.google.com/spreadsheets/d/1yq3KJGtQB4OX5y0Qz8FgM7Z88d00rXtP_aKc79Ki1BE/template/preview) :point_left: y elimina su contenido.
 
