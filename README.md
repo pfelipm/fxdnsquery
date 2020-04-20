@@ -28,7 +28,7 @@ Donde `lista_emails_o_dominios` es una cadena de texto que representa una direcc
 
 Ejemplo:
 
-`=ESGOOGLEEMAIL(A3:A13)`
+`=ESGOOGLEMAIL(A3:A13)`
 
 ![Selección_053](https://user-images.githubusercontent.com/12829262/79771812-98e3f800-832f-11ea-8839-0f9999de9e66.png)
 
