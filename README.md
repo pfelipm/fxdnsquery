@@ -33,6 +33,6 @@ Ejemplo:
 ![Selección_053](https://user-images.githubusercontent.com/12829262/79771812-98e3f800-832f-11ea-8839-0f9999de9e66.png)
 
 # Licencia
-El código original de la función `NSLookup` pertenece a CloudFlare.
+El código original de la función `NSLookup()` pertenece a CloudFlare.
 
-Funciones CONSULTADNS y ESGOOGLEMAIL ©  2020 Pablo Felip Monferrer ([@pfelipm](https://twitter.com/pfelipm)). Se distribuye bajo licencia MIT.
+Funciones `CONSULTADNS()` y `ESGOOGLEMAIL()` ©  2020 Pablo Felip Monferrer ([@pfelipm](https://twitter.com/pfelipm)). Se distribuye bajo licencia MIT.
