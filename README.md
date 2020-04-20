@@ -11,7 +11,7 @@ Consulta el registro indicado en el o los dominios que se pasan como parámetro 
 
 Donde:
 - `registroDNS`: Alguna de estas cadenas de texto: **A | AAAA | CAA | CNAME | DS | DNSKEY | MX | NS | NSEC | NSEC3 | RRSIG | SOA | TXT**
-- `dominios`: Una cadena de texto que representa un dominio válido, o una referencia a una celda o rango de celdas en las que se encuentran los dominios a consultar.
+- `dominios`: Una cadena de texto que representa un dominio válido o un intervalo con un conjunto de ellas.
 
 Ejemplo:
 
@@ -20,11 +20,11 @@ Ejemplo:
 ![dnsquery1](https://user-images.githubusercontent.com/12829262/79770552-dcd5fd80-832d-11ea-8859-04b461d2f9da.png)
 
 # Función ESGOOGLEMAIL()
-Determina si un email, dominio (o lista de emails o dominios) está gestionado por Google o no.
+Determina si un email o dominio (o lista de emails o dominios) está gestionado por Google o no.
 
 `=ESGOOGLEEMAIL(lista_emails_o_dominios)`
 
-Donde `lista_emails_o_dominios` es una cadena de texto que representa una dirección de correo electrónico o un intervalo de celdas que los contienen.
+Donde `lista_emails_o_dominios` es una cadena de texto que representa una dirección de correo electrónico o dominio o un intervalo de ellas.
 
 Ejemplo:
 
