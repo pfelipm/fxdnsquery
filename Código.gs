@@ -22,7 +22,8 @@ function CONSULTADNS(registroDNS, lista_dominios) {
   
   if (typeof registroDNS != 'string') throw 'Falta parámetro 1 o es incorrecto (registroDNS).';
   if (typeof lista_dominios == 'undefined') throw 'Falta parámetro 2 (lista_dominios).';
-  if (!tipoRegistros.some(function(tipo) {return tipo == registroDNS;})) throw "Registro DNS no admitido.";
+  registroDNS = registroDNS.toUpperCase();
+  if (!tipoRegistros.some(tipo => tipo == registroDNS)) throw "Registro DNS no admitido.";
   
   let resultado = [];
   
@@ -32,7 +33,7 @@ function CONSULTADNS(registroDNS, lista_dominios) {
     resultado.push(dominio != '' ? NSLookup(registroDNS, dominio) : '');});
   }
   else {
-    resultado = lista_dominios != '' ? dnsHelper(registroDNS, lista_dominios) : '';
+    resultado = lista_dominios != '' ? NSLookup(registroDNS, lista_dominios) : '';
   }
   
   return resultado; 
@@ -91,7 +92,7 @@ function ESGOOGLEMAIL(lista_email) {
       
       // TRUE si el registro MX devuelto contiene algunos de los elementos de domains[]
       
-      resultado = domains.some(function(d) {return String(NSLookup('MX', domain)).toLowerCase().includes(d);});
+      resultado = domains.some(d => String(NSLookup('MX', domain)).toLowerCase().includes(d));
     }
   }
   
@@ -105,9 +106,7 @@ function ESGOOGLEMAIL(lista_email) {
  */
 
 function NSLookup(type, domain) {
-  
-  type = type.toUpperCase();
-   
+     
   let url = 'https://cloudflare-dns.com/dns-query?name=' + encodeURIComponent(domain) + '&type=' + encodeURIComponent(type);
   
   let options = {
