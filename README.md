@@ -4,6 +4,8 @@ Dos funciones personalizadas para hojas de cálculo de Google desarrolladas en A
 
 En esta [hoja de cálculo](https://docs.google.com/spreadsheets/d/1yq3KJGtQB4OX5y0Qz8FgM7Z88d00rXtP_aKc79Ki1BE/template/preview) se pueden encontrar sendos ejemplos de uso.
 
+![DNS Query - Hojas de cálculo de Google](https://user-images.githubusercontent.com/12829262/79798969-0c9afa80-835a-11ea-8c7e-63e42abb16fe.gif)
+
 # Función CONSULTADNS()
 Consulta el registro indicado en el o los dominios que se pasan como parámetro utilizando el servicio de resolución de nombres de CloudFlare.
 
