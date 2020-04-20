@@ -26,7 +26,7 @@ Determina si un email o dominio (o lista de emails o dominios) está gestionado 
 
 `=ESGOOGLEEMAIL(lista_emails_o_dominios)`
 
-Donde `lista_emails_o_dominios` es una dirección de correo electrónico o dominio o un intervalo de ellos con varios de ellos.
+Donde `lista_emails_o_dominios` es una dirección de correo electrónico o dominio o un intervalo con varios de ellos.
 
 Ejemplo:
 
