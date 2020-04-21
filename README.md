@@ -24,9 +24,11 @@ Ejemplo:
 # Función ESGOOGLEMAIL()
 Determina si un email o dominio (o lista de emails o dominios) está gestionado por Google o no.
 
-`=ESGOOGLEEMAIL(lista_emails_o_dominios)`
+`=ESGOOGLEEMAIL(lista_emails_o_dominios, tipo_de_coincidencia)`
 
-Donde `lista_emails_o_dominios` es una dirección de correo electrónico o dominio o un intervalo con varios de ellos.
+Donde:
+- `lista_emails_o_dominios`: Una dirección de correo electrónico o dominio o un intervalo con varios de ellos.
+- `tipo_de_coincidencia`: Indica qué tipo de direcciones o dominios se considerarán coincidentes. Puede tomar los valores "gmail", "gsuite" o "todos" (por defecto "todos").
 
 Ejemplo:
 
