@@ -48,6 +48,7 @@ function CONSULTADNS(registroDNS, lista_dominios) {
  * por medio del servicio de CloudFlare. 
  *
  * @param {"juannadie@google.com"} lista_emails Emails o dominios a comprobar.
+ * @param {"gsuite"} tipo Tipo de comprobación ("todos" | "gsuite" | "gmail"). Por defecto "todos".
  * 
  * @return TRUE | FALSE
  *
@@ -59,7 +60,7 @@ function CONSULTADNS(registroDNS, lista_dominios) {
  * Copyright (c) 2020 Pablo Felip Monferrer(@pfelipm)
  */ 
 
-function ESGOOGLEMAIL(lista_emails) {
+function ESGOOGLEMAIL(lista_emails, tipo = 'todos') {
   
   // Comprobación general de parámetros
 
@@ -67,8 +68,20 @@ function ESGOOGLEMAIL(lista_emails) {
 
   // Dominios válidos para servidores de correo de Google
   
-  const domains = ['aspmx.l.google.com', 'googlemail.com', 'google.com']; // El 2º parece ser obsoleto
+  let domains = [];
   
+  switch (String(tipo).toLowerCase()) { // String() para cazar un posible número como tipo
+    case 'gsuite':
+      domains = ['aspmx.l.google.com', 'googlemail.com']; // El 2º parece ser obsoleto
+      break;
+    case 'gmail':
+      domains = ['gmail-smtp-in.l.google.com'];
+      break;
+    default: // gmail + gsuite
+      domains = ['aspmx.l.google.com', 'googlemail.com', 'gmail-smtp-in.l.google.com']; // El 2º parece ser obsoleto
+      break;
+  }
+    
   let domain, resultado = [];
   
   if (lista_emails.map) {
