@@ -9,7 +9,7 @@ En esta [hoja de cálculo](https://docs.google.com/spreadsheets/d/1yq3KJGtQB4OX5
 # Función CONSULTADNS()
 Consulta el registro indicado en el o los dominios que se pasan como parámetro utilizando el servicio de resolución de nombres de CloudFlare.
 
-`=CONSULTADNS(registroDNS, lista_dominios)`
+`=CONSULTADNS(registroDNS; lista_dominios)`
 
 Donde:
 - `registroDNS`: Alguna de estas cadenas de texto: **A | AAAA | CAA | CNAME | DS | DNSKEY | MX | NS | NSEC | NSEC3 | RRSIG | SOA | TXT**
@@ -24,7 +24,7 @@ Ejemplo:
 # Función ESGOOGLEMAIL()
 Determina si un email o dominio (o lista de emails o dominios) está gestionado por Google o no.
 
-`=ESGOOGLEEMAIL(lista_emails_o_dominios, tipo_de_coincidencia)`
+`=ESGOOGLEEMAIL(lista_emails_o_dominios; tipo_de_coincidencia)`
 
 Donde:
 - `lista_emails_o_dominios`: Una dirección de correo electrónico o dominio o un intervalo con varios de ellos.
