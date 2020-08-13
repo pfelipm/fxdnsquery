@@ -4,7 +4,7 @@
  * @param {"MX"} registroDNS Registro a consultar ( A | AAAA | CAA | CNAME | DS | DNSKEY | MX | NS | NSEC | NSEC3 | RRSIG | SOA | TXT ).
  * @param {A2:A10} lista_dominios Dominio o intervalo con los dominios a interrogar.
  *
- * @return Resultados de la consulta DNS
+ * @returns Resultados de la consulta DNS
  *
  * Envoltorio para NSLookup() >> https://developers.cloudflare.com/1.1.1.1/fun-stuff/dns-in-google-sheets/
  *
