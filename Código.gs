@@ -145,7 +145,7 @@ function NSLookup(type, domain) {
       { "name": "NoError", "description": "Sin errores"}, // 0
       { "name": "FormErr", "description": "Error de formato"}, // 1
       { "name": "ServFail", "description": "Fallo del servidor"}, // 2
-      { "name": "NXDomain", "description": "Dominio no existe "}, // 3
+      { "name": "NXDomain", "description": "Dominio no existe"}, // 3
       { "name": "NotImp", "description": "No implementado"}, // 4
       { "name": "Refused", "description": "Consulta rechazada"}, // 5
       { "name": "YXDomain", "description": "El nombre no debería existir"}, // 6
