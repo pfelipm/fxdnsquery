@@ -12,34 +12,35 @@
  *
  * MIT License
  * Copyright (c) 2020 Pablo Felip Monferrer(@pfelipm)
- */ 
+ */
 
 function CONSULTADNS(registroDNS, lista_dominios) {
-  
+
   // Comprobación general de parámetros
-  
+
   const tipoRegistros = ['A', 'AAAA', 'CAA', 'CNAME', 'DS', 'DNSKEY', 'MX', 'NS', 'NSEC', 'NSEC3', 'RRSIG', 'SOA', 'TXT'];
-  
+
   if (typeof registroDNS != 'string') throw 'Falta parámetro 1 o es incorrecto (registroDNS).';
   if (typeof lista_dominios == 'undefined') throw 'Falta parámetro 2 (lista_dominios).';
   registroDNS = registroDNS.toUpperCase();
   if (!tipoRegistros.some(tipo => tipo == registroDNS)) throw "Registro DNS no admitido.";
-  
+
   let resultado = [];
-  
+
   // Realiza consulta(s) o establece resultado(s) como ''
-  
+
   if (lista_dominios.map) {
     lista_dominios.forEach(dominios => {
-                           let fila = [];
-                           dominios.forEach(dominio => {fila.push(dominio != '' ? NSLookup(registroDNS, dominio) : '');});
-                           resultado.push(fila);});
+      let fila = [];
+      dominios.forEach(dominio => { fila.push(dominio != '' ? NSLookup(registroDNS, dominio) : ''); });
+      resultado.push(fila);
+    });
   }
   else {
     resultado = lista_dominios != '' ? NSLookup(registroDNS, lista_dominios) : '';
   }
-  
-  return resultado; 
+
+  return resultado;
 }
 
 /**
@@ -58,18 +59,18 @@ function CONSULTADNS(registroDNS, lista_dominios) {
  *
  * MIT License
  * Copyright (c) 2020 Pablo Felip Monferrer(@pfelipm)
- */ 
+ */
 
 function ESGOOGLEMAIL(lista_emails, tipo = 'todos') {
-  
+
   // Comprobación general de parámetros
 
   if (typeof lista_emails == 'undefined') throw 'Falta parámetro (lista_email)';
 
   // Dominios válidos para servidores de correo de Google
-  
+
   let domains = [];
-  
+
   switch (String(tipo).toLowerCase()) { // String() para cazar un posible número como tipo
     case 'gsuite':
       domains = ['aspmx.l.google.com', 'googlemail.com']; // El 2º parece ser obsoleto
@@ -81,37 +82,47 @@ function ESGOOGLEMAIL(lista_emails, tipo = 'todos') {
       domains = ['aspmx.l.google.com', 'googlemail.com', 'gmail-smtp-in.l.google.com']; // El 2º parece ser obsoleto
       break;
   }
-    
+
   let domain, resultado = [];
-  
+
   if (lista_emails.map) {
-    
+
     lista_emails.forEach(emails => {
-                         let fila = [];
-                         emails.forEach(email => {
-                           if (email == '') fila.push('');
-                           else {
-                             if (email.includes('@')) domain = email.match(/.*@(.+)$/)[1];
-                             else domain = email;
-                           }
-                           // TRUE si el registro MX devuelto contiene algunos de los elementos de domains[]
-                           fila.push(domains.some(d => String(NSLookup('MX', domain)).toLowerCase().includes(d)));});
-                  
-                         resultado.push(fila)})
+
+      let fila = [];
+      emails.forEach(email => {
+        if (email == '') fila.push('');
+        else {
+          if (email.includes('@')) domain = email.match(/.*@(.+)$/)[1];
+          else domain = email;
+        }
+        // TRUE si el registro MX devuelto contiene algunos de los elementos de domains[]
+        registroMx = NSLookup('MX', domain).toLowerCase();
+        fila.push(domains.some(d => registroMx.includes(d)));
+      });
+
+      resultado.push(fila)
+
+    });
+
   } else {
-    if (lista_emails == '') {resultado = '';}
+
+    if (lista_emails == '') resultado = '';
     else {
-      
-      if (lista_emails.includes('@')) {domain = lista_emails.match(/.*@(.+)$/)[1];
-                             } else {domain = lista_emails;}
-      
+
+      if (lista_emails.includes('@')) domain = lista_emails.match(/.*@(.+)$/)[1];
+      else { domain = lista_emails; }
+
       // TRUE si el registro MX devuelto contiene algunos de los elementos de domains[]
-      
-      resultado = domains.some(d => String(NSLookup('MX', domain)).toLowerCase().includes(d));
+      registroMx = NSLookup('MX', domain).toLowerCase();
+      resultado = domains.some(d => registroMx.includes(d));
+      //resultado = domains.some(d => String(NSLookup('MX', domain)).toLowerCase().includes(d));
+
     }
   }
-  
+
   return resultado;
+
 }
 
 /**
@@ -121,59 +132,57 @@ function ESGOOGLEMAIL(lista_emails, tipo = 'todos') {
  */
 
 function NSLookup(type, domain) {
-     
+
   let url = 'https://cloudflare-dns.com/dns-query?name=' + encodeURIComponent(domain) + '&type=' + encodeURIComponent(type);
-  
+
   let options = {
     "muteHttpExceptions": true,
     "headers": {
       "accept": "application/dns-json"
     }
   };
-  
+
   try {
-    
+
     var result = UrlFetchApp.fetch(url, options);
     var rc = result.getResponseCode();
     var resultText = result.getContentText();
-    
+
     if (rc !== 200) {
       throw new Error(rc);
     }
-    
+
     let errors = [
-      { "name": "NoError", "description": "Sin errores"}, // 0
-      { "name": "FormErr", "description": "Error de formato"}, // 1
-      { "name": "ServFail", "description": "Fallo del servidor"}, // 2
-      { "name": "NXDomain", "description": "Dominio no existe"}, // 3
-      { "name": "NotImp", "description": "No implementado"}, // 4
-      { "name": "Refused", "description": "Consulta rechazada"}, // 5
-      { "name": "YXDomain", "description": "El nombre no debería existir"}, // 6
-      { "name": "YXRRSet", "description": "El conjunto RR no debería existir"}, // 7
-      { "name": "NXRRSet", "description": "El conjunto RR debería existir"}, // 8
-      { "name": "NotAuth", "description": "No autorizado"} // 9
+      { "name": "NoError", "description": "Sin errores" }, // 0
+      { "name": "FormErr", "description": "Error de formato" }, // 1
+      { "name": "ServFail", "description": "Fallo del servidor" }, // 2
+      { "name": "NXDomain", "description": "Dominio no existe" }, // 3
+      { "name": "NotImp", "description": "No implementado" }, // 4
+      { "name": "Refused", "description": "Consulta rechazada" }, // 5
+      { "name": "YXDomain", "description": "El nombre no debería existir" }, // 6
+      { "name": "YXRRSet", "description": "El conjunto RR no debería existir" }, // 7
+      { "name": "NXRRSet", "description": "El conjunto RR debería existir" }, // 8
+      { "name": "NotAuth", "description": "No autorizado" } // 9
     ];
-    
+
     let response = JSON.parse(resultText);
-    
+
     if (response.Status !== 0) {
       return errors[response.Status].name;
     }
-    
+
     var outputData = [];
-    
+
     for (let i in response.Answer) {
       outputData.push(response.Answer[i].data);
     }
-    
-    var outputString = outputData.join(',');
-    
-    return outputString;
-  
-  } catch(e) {
-    
+
+    return outputData.join(',');
+
+  } catch (e) {
+
     return '¡Error al consultar!';
-    
+
   }
-   
+
 }
