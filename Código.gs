@@ -30,15 +30,14 @@ function CONSULTADNS(registroDNS, lista_dominios) {
   // Realiza consulta(s) o establece resultado(s) como ''
 
   if (lista_dominios.map) {
+
     lista_dominios.forEach(dominios => {
       let fila = [];
       dominios.forEach(dominio => { fila.push(dominio != '' ? NSLookup(registroDNS, dominio) : ''); });
       resultado.push(fila);
     });
-  }
-  else {
-    resultado = lista_dominios != '' ? NSLookup(registroDNS, lista_dominios) : '';
-  }
+    
+  } else resultado = lista_dominios != '' ? NSLookup(registroDNS, lista_dominios) : '';
 
   return resultado;
 }
@@ -83,7 +82,8 @@ function ESGOOGLEMAIL(lista_emails, tipo = 'todos') {
       break;
   }
 
-  let domain, resultado = [];
+  let domain;
+  const resultado = [];
 
   if (lista_emails.map) {
 
@@ -133,9 +133,9 @@ function ESGOOGLEMAIL(lista_emails, tipo = 'todos') {
 
 function NSLookup(type, domain) {
 
-  let url = 'https://cloudflare-dns.com/dns-query?name=' + encodeURIComponent(domain) + '&type=' + encodeURIComponent(type);
+  const url = 'https://cloudflare-dns.com/dns-query?name=' + encodeURIComponent(domain) + '&type=' + encodeURIComponent(type);
 
-  let options = {
+  const options = {
     "muteHttpExceptions": true,
     "headers": {
       "accept": "application/dns-json"
@@ -144,15 +144,13 @@ function NSLookup(type, domain) {
 
   try {
 
-    var result = UrlFetchApp.fetch(url, options);
-    var rc = result.getResponseCode();
-    var resultText = result.getContentText();
+    const result = UrlFetchApp.fetch(url, options);
+    const rc = result.getResponseCode();
+    const resultText = result.getContentText();
 
-    if (rc !== 200) {
-      throw new Error(rc);
-    }
+    if (rc !== 200) throw new Error(rc);
 
-    let errors = [
+    const errors = [
       { "name": "NoError", "description": "Sin errores" }, // 0
       { "name": "FormErr", "description": "Error de formato" }, // 1
       { "name": "ServFail", "description": "Fallo del servidor" }, // 2
@@ -165,14 +163,13 @@ function NSLookup(type, domain) {
       { "name": "NotAuth", "description": "No autorizado" } // 9
     ];
 
-    let response = JSON.parse(resultText);
+    const response = JSON.parse(resultText);
 
     if (response.Status !== 0) {
       return errors[response.Status].name;
     }
 
-    var outputData = [];
-
+    const outputData = [];
     for (let i in response.Answer) {
       outputData.push(response.Answer[i].data);
     }
@@ -180,9 +177,7 @@ function NSLookup(type, domain) {
     return outputData.join(',');
 
   } catch (e) {
-
     return '¡Error al consultar!';
-
   }
 
 }
