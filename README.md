@@ -1,5 +1,5 @@
 ![banner readme](https://user-images.githubusercontent.com/12829262/79766521-5ff45500-8328-11ea-8084-3849700180c7.png)
-[![Creado con - Google Apps Script](https://img.shields.io/static/v1?label=Creado+con&message=Google+Apps+Script&color=blue&logo=Google)](https://developers.google.com/apps-script)
+[![Creado con - Google Apps Script](https://img.shields.io/static/v1?label=Creado+con&message=Google+Apps+Script&color=blue&logo=Google&logoColor=White)](https://developers.google.com/apps-script)
 # DNSQuery
 Dos funciones personalizadas para hojas de cálculo de Google desarrolladas en Apps Script que proporcionan un envoltorio para la función `NSLookup`, tal y como aparece en la [documentación](https://developers.cloudflare.com/1.1.1.1/fun-stuff/dns-in-google-sheets/) del servicio de resolución de nombres de CloudFlare.
 
