@@ -10,8 +10,8 @@
  *
  * @customfunction
  *
- * MIT License
- * Copyright (c) 2020 Pablo Felip Monferrer(@pfelipm)
+ * MIT license
+ * Copyright (c) 2020 Pablo Felip Monferrer (@pfelipm)
  */
 
 function CONSULTADNS(registroDNS, lista_dominios) {
