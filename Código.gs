@@ -10,7 +10,7 @@
  *
  * @customfunction
  *
- * MIT license
+ * MIT License
  * Copyright (c) 2020 Pablo Felip Monferrer (@pfelipm)
  */
 
